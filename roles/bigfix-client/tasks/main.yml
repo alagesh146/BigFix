@@ -19,8 +19,14 @@
 - include: install.yml
   when: not bigfix_installed.stat.exists
 
+# commented out to copy the actionsite from a local filestore 
+#- name: Download masthead from BigFix Server
+#  shell: curl "http://{{ bigfix_client_server_name }}:{{ bigfix_client_server_port }}/masthead/masthead.afxm" --output "{{ bigfix_client_conf_dir}}/actionsite.afxm"
+
 - name: Download masthead from BigFix Server
-  shell: curl "http://{{ bigfix_client_server_name }}:{{ bigfix_client_server_port }}/masthead/masthead.afxm" --output "{{ bigfix_client_conf_dir}}/actionsite.afxm"
+   src: /files/actionsite.afxm
+   dest: {{ bigfix_client_conf_dir}}/actionsite.afxm
+      
 
 - name: Start the service
   service:
